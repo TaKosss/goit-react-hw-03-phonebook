@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { Formik } from 'formik';
 import { nanoid } from 'nanoid';
 import schema from 'validation/validation';
+
 import { FormWrap, Input, Label, Alert, Button } from './ContactForm.styled';
 
 const initialValues = {

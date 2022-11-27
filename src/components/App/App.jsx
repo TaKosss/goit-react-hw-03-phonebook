@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
-import ContactForm from '../ContactForm';
-import ContactList from '../ContactList';
-import Filter from '../Filter/Filter';
 import Notiflix from 'notiflix';
 import { nanoid } from 'nanoid';
 
-import { Body, Wrap, Title } from 'components/App/App.styled';
+import ContactForm from '../ContactForm/ContactForm';
+import ContactList from '../ContactList/ContactList';
+import Filter from '../Filter/Filter';
+import {
+  getContactsFromStorage,
+  setContactsToStorage,
+} from '../../utils/localStorage';
+
+import { Body, Wrap, Title } from './App.styled';
 
 export default class App extends Component {
   state = {
@@ -53,16 +58,15 @@ export default class App extends Component {
     }));
   };
   componentDidMount() {
-    const contacts = localStorage.getItem('contacts');
-    const parsedContacts = JSON.parse(contacts);
-
+    const parsedContacts = getContactsFromStorage();
     if (parsedContacts) {
       this.setState({ contacts: parsedContacts });
     }
   }
+
   componentDidUpdate(prevState) {
     if (this.state.contacts !== prevState.contacts) {
-      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+      setContactsToStorage(this.state.contacts);
     }
   }
   render() {
